@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.phasmobile.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_orbcam"
+        android:name="com.example.phasmobile.ui.orbcam.OrbcamFragment"
+        android:label="Camera"
+        tools:layout="@layout/fragment_orbcam" />
+    <fragment
+        android:id="@+id/nav_journal"
+        android:name="com.example.phasmobile.ui.journal.JournalFragment"
+        android:label="Journal"
+        tools:layout="@layout/fragment_journal"/>
+
+    <fragment
+        android:id="@+id/nav_thermometer"
+        android:name="com.example.phasmobile.ui.thermometer.ThermometerFragment"
+        android:label="Thermometer"
+        tools:layout="@layout/fragment_thermometer" />
+
+    <fragment
+        android:id="@+id/nav_ultraviolet"
+        android:name="com.example.phasmobile.ui.uv.UvFragment"
+        android:label="UltraViolet" />
+    <fragment
+        android:id="@+id/nav_emf"
+        android:name="com.example.phasmobile.ui.emf.Emf"
+        android:label="fragment_emf"
+        tools:layout="@layout/fragment_emf" />
+    <fragment
+        android:id="@+id/nav_spiritbox"
+        android:name="com.example.phasmobile.ui.spiritbox.SpiritBoxFragment"
+        android:label="fragment_spirit_box"
+        tools:layout="@layout/fragment_spirit_box" />
+</navigation>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_orbcam"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Camera"/>
+
+        <item
+            android:id="@+id/nav_journal"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Journal"/>
+
+        <item
+            android:id="@+id/nav_thermometer"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Thermometer"/>
+
+        <item
+            android:id="@+id/nav_ultraviolet"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Ultraviolet Flashlight"/>
+
+        <item
+            android:id="@+id/nav_emf"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="EMF reader"/>
+
+        <item
+            android:id="@+id/nav_spiritbox"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Spirit Box"/>
+    </group>
+</menu>
