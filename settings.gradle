@@ -5,5 +5,5 @@ pluginManagement {
     }
 }
 
-include ':camera-calibration', ':opencv344-contrib'
+include ':opencv344-contrib'
 include ':phasmobile'
