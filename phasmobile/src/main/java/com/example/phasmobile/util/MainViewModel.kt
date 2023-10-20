@@ -36,6 +36,7 @@ data class UiState(
     val gamestate: GameState? = null
 ) {
     fun canSeeOrbs(): Boolean {
+        if (!connected) return true;
         val orbsVisible = gamestate?.orbsVisible ?: false
         val favRoom = gamestate?.favoriteRoom ?: -1
         val room = closestBeacon ?: -2
