@@ -54,7 +54,7 @@ class OrbcamFragment : Fragment(), CvCameraViewListener2 {
         super.onCreate(savedInstanceState)
 
         val res = context?.resources
-        val orbBmp = BitmapFactory.decodeResource(res, R.drawable.orb);
+        val orbBmp = BitmapFactory.decodeResource(res, R.drawable.gorb);
         Utils.bitmapToMat(orbBmp, orbImg)
     }
 
@@ -137,7 +137,8 @@ class OrbcamFragment : Fragment(), CvCameraViewListener2 {
             if (destRect.x + destRect.width < outBuf.width()
                 && destRect.y + destRect.height < outBuf.height()) {
                 val outRoi = outBuf.submat(destRect)
-                Core.addWeighted(outRoi, alpha, orbImg, 1-alpha,0.2, outRoi)
+                Core.add(outRoi, orbImg, outRoi)
+//                Core.addWeighted(outRoi, alpha, orbImg, 1-alpha,0.2, outRoi)
                 outRoi.release()
             }
         }
