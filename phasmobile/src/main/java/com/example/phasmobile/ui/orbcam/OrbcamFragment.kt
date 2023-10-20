@@ -152,26 +152,36 @@ class OrbcamFragment : Fragment(), CvCameraViewListener2 {
 }
 
 class Orb() {
-    var x = Random.nextInt(0, MAX_X);
-    var y = Random.nextInt(0, MAX_Y);
+    var x: Int
+    var y: Int
     var dx: Int
     var dy: Int
 
     var pauseTime: Instant? = null;
 
     init {
+        x = Random.nextInt(0, MAX_X);
+        y = Random.nextInt(0, MAX_Y);
+        dx = Random.nextInt(1, 3)
+        dy = Random.nextInt(1, 3)
         if(Random.nextBoolean()) {
-            dx = 1
+            dx *= -1
         }
-        else {
-            dx = -1
-        }
-
         if (Random.nextBoolean()) {
-            dy = 1
+            dy *= -1
         }
-        else {
-            dy = -1
+    }
+
+    private fun randomize() {
+        x = Random.nextInt(0, MAX_X);
+        y = Random.nextInt(0, MAX_Y);
+        dx = Random.nextInt(1, 3)
+        dy = Random.nextInt(1, 3)
+        if(Random.nextBoolean()) {
+            dx *= -1
+        }
+        if (Random.nextBoolean()) {
+            dy *= -1
         }
     }
 
@@ -180,9 +190,7 @@ class Orb() {
             val duration = Duration.between(pauseTime, Instant.now()).seconds
             if (duration > 4) {
                 pauseTime = null
-                x = Random.nextInt(0, MAX_X);
-                y = Random.nextInt(0, MAX_Y);
-
+                randomize()
             }
             return
         }
