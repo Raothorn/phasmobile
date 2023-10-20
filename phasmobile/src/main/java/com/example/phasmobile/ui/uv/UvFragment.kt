@@ -251,17 +251,6 @@ class UvFragment : Fragment(), CvCameraViewListener2 {
             val activity = activity as Activity
             Log.d(TAG, "activity $activity")
             if (status == SUCCESS) {
-                MainActivity.CameraData.cameraMat = Mat.eye(3, 3, CvType.CV_64FC1)
-                MainActivity.CameraData.distCoeffs = MatOfDouble(Mat.zeros(5, 1, CvType.CV_64FC1))
-                if (CameraParams.fileExists(activity)) {
-                    CameraParams.tryLoad(
-                        activity,
-                        MainActivity.CameraData.cameraMat,
-                        MainActivity.CameraData.distCoeffs
-                    )
-                } else {
-                    CameraParams.selectFile(activity)
-                }
                 camera.enableView()
             } else {
                 super.onManagerConnected(status)

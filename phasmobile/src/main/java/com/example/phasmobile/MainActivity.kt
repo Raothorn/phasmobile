@@ -19,6 +19,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.example.phasmobile.databinding.ActivityMainBinding
 import com.example.phasmobile.util.CameraParams
 import org.opencv.android.OpenCVLoader
+import org.opencv.core.CvType
 import org.opencv.core.Mat
 import org.opencv.core.MatOfDouble
 
@@ -53,6 +54,18 @@ class MainActivity : AppCompatActivity() {
             ),
             1
         )
+
+        CameraData.cameraMat = Mat.eye(3, 3, CvType.CV_64FC1)
+        CameraData.distCoeffs = MatOfDouble(Mat.zeros(5, 1, CvType.CV_64FC1))
+        if (CameraParams.fileExists(this)) {
+            CameraParams.tryLoad(
+                this,
+                MainActivity.CameraData.cameraMat,
+                MainActivity.CameraData.distCoeffs
+            )
+        } else {
+            CameraParams.selectFile(this)
+        }
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
