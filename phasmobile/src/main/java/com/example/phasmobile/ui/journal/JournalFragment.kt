@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.phasmobile.R
 import com.example.phasmobile.databinding.FragmentJournalBinding
 
-private const val TAG = "JournalFragment"
+private const val TAG = "Interface"
 class JournalFragment : Fragment() {
 
     private var _binding: FragmentJournalBinding? = null

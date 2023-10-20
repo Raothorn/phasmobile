@@ -22,7 +22,7 @@ import org.opencv.android.OpenCVLoader
 import org.opencv.core.Mat
 import org.opencv.core.MatOfDouble
 
-private const val TAG = "MainActivity";
+private const val TAG = "Interface";
 
 class MainActivity : AppCompatActivity() {
 

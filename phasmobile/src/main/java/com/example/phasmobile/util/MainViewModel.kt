@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-private const val TAG = "MainViewModel"
+private const val TAG = "ViewModel"
 
 data class GameState (
     val ghostLocation: Int,

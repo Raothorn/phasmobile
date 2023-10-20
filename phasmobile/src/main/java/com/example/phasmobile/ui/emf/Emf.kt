@@ -15,6 +15,7 @@ import com.example.phasmobile.R
 import com.example.phasmobile.util.MainViewModel
 import kotlinx.coroutines.launch
 
+private const val TAG="Interface"
 class Emf : Fragment() {
 
     private var emf = 0

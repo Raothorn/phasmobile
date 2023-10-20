@@ -17,7 +17,7 @@ import com.example.phasmobile.databinding.FragmentHomeBinding
 import com.example.phasmobile.util.MainViewModel
 import kotlinx.coroutines.launch
 
-private const val TAG = "HomeFragment"
+private const val TAG = "Interface"
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null

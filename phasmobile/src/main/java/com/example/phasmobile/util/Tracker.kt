@@ -15,7 +15,7 @@ import java.time.Instant
 import java.util.Calendar
 import java.util.Date
 
-private const val TAG = "TRACKER"
+private const val TAG = "Bluetooth"
 class Tracker(
     private val viewModel: MainViewModel, private val ctx: Context
 ) {

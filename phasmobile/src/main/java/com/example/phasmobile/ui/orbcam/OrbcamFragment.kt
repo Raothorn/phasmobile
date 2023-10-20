@@ -32,7 +32,7 @@ import kotlin.random.Random
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val TAG = "OrbcamFragment"
+private const val TAG = "Camera"
 
 /**
  * A simple [Fragment] subclass.

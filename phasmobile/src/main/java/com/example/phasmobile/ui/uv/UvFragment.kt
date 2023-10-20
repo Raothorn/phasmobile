@@ -40,12 +40,11 @@ import org.opencv.core.Size
 import org.opencv.imgproc.Imgproc
 import java.util.LinkedList
 
-private const val TAG = "CameraFrag"
+private const val TAG = "Camera"
 private const val UV_RADIUS = 400
 private const val SIZE = 0.04f;
 
 class UvFragment : Fragment(), CvCameraViewListener2 {
-
     private lateinit var camera: PortraitCameraView
 
     private lateinit var params: DetectorParameters
@@ -57,10 +56,12 @@ class UvFragment : Fragment(), CvCameraViewListener2 {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.i(TAG, "Creating UvFragment")
 
         val res = context?.resources
         val handBmp = BitmapFactory.decodeResource(res, R.drawable.ghosty)
         Utils.bitmapToMat(handBmp, handImg)
+        Log.i(TAG, "Loaded bitmap")
     }
 
     override fun onCreateView(
@@ -84,6 +85,7 @@ class UvFragment : Fragment(), CvCameraViewListener2 {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.i(TAG, "View created")
 
         val layout = view.findViewById<LinearLayout>(R.id.llUv)
 
@@ -93,13 +95,15 @@ class UvFragment : Fragment(), CvCameraViewListener2 {
         camera.enableView()
 
         layout.addView(camera)
-
+        Log.i(TAG, "Camera set up")
     }
 
     override fun onCameraViewStarted(width: Int, height: Int) {
+        Log.i(TAG, "Camera view started")
         params = DetectorParameters.create()
         dictionary = Aruco.getPredefinedDictionary(Aruco.DICT_6X6_50)
 
+        Log.i(TAG, "Creating UV Circle image")
         // Create UV circle
         circleImg = Mat.zeros(height, width, CvType.CV_8UC4)
 
@@ -124,9 +128,11 @@ class UvFragment : Fragment(), CvCameraViewListener2 {
 
             Core.addWeighted(img, alpha, circleImg, 1.0, 0.0, circleImg)
         }
+        Log.i(TAG, "Created circle image")
     }
 
     override fun onCameraViewStopped() {
+        Log.i(TAG, "Camera view stopped")
     }
 
     override fun onCameraFrame(inputFrame: CameraBridgeViewBase.CvCameraViewFrame?): Mat {
@@ -146,11 +152,10 @@ class UvFragment : Fragment(), CvCameraViewListener2 {
     }
 
     // Making these class members for memory reasons
-    val rgb = Mat()
-    val gray = Mat()
-    val rvecs = Mat()
-    val tvecs = Mat()
-
+    private val rgb = Mat()
+    private val gray = Mat()
+    private val rvecs = Mat()
+    private val tvecs = Mat()
     private fun drawMarkers() {
         if (outBuf.empty()) return
 
@@ -164,8 +169,6 @@ class UvFragment : Fragment(), CvCameraViewListener2 {
         Aruco.detectMarkers(gray, dictionary, corners, ids, params)
 
         if (corners.isNotEmpty()) {
-//            Aruco.drawDetectedMarkers(rgb, corners, ids);
-
             Aruco.estimatePoseSingleMarkers(
                 corners,
                 SIZE,
@@ -180,19 +183,17 @@ class UvFragment : Fragment(), CvCameraViewListener2 {
                 drawHandprint(rvecs.row(i), tvecs.row(i))
             }
         }
-
-//        Imgproc.cvtColor(rgb, outBuf, Imgproc.COLOR_RGB2RGBA);
     }
 
     // Making these class members for memory reasons
-    val squareMat = MatOfPoint3f()
-    val projectedPoints2f = MatOfPoint2f()
-    val srcPoints = MatOfPoint2f()
-    val projectedPoints = MatOfPoint()
-    val warpImage = Mat()
-    var poly_mask = Mat()
-    var circle_mask = Mat()
-    var mask = Mat()
+    private val squareMat = MatOfPoint3f()
+    private val projectedPoints2f = MatOfPoint2f()
+    private val srcPoints = MatOfPoint2f()
+    private val projectedPoints = MatOfPoint()
+    private val warpImage = Mat()
+    private var poly_mask = Mat()
+    private var circle_mask = Mat()
+    private var mask = Mat()
     private fun drawHandprint(rvec: Mat, tvec: Mat) {
         val hs = SIZE / 2.0
 
@@ -242,14 +243,6 @@ class UvFragment : Fragment(), CvCameraViewListener2 {
 
         Log.d(TAG, "${projectedPoints.toList()}")
         Core.bitwise_and(warpImage, warpImage, outBuf, mask)
-
-//        warpImage.release()
-//        mask.release()
-//        homography.release()
-//        projectedPoints.release()
-//        projectedPoints2f.release()
-//        srcPoints.release()
-//        squareMat.release()
     }
 
 

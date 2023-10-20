@@ -22,7 +22,7 @@ import com.google.android.material.button.MaterialButton
 import kotlin.random.Random
 
 
-private const val TAG = "SpiritBox"
+private const val TAG = "Interface"
 
 class SpiritBoxFragment : Fragment() {
     private lateinit var speechRecognizer: SpeechRecognizer;

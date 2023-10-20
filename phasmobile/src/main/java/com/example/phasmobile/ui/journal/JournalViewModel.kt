@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.phasmobile.BR
 
+private const val TAG="ViewModel"
 class JournalViewModel : BaseObservable() {
     private var _emf = false
     private var _spiritBox = false

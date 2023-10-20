@@ -13,7 +13,7 @@ import javax.net.ssl.X509TrustManager
 import org.json.JSONObject
 
 
-private const val TAG = "WebSocketListener"
+private const val TAG = "Socket"
 
 class WebSocketListener(private val viewModel: MainViewModel) : okhttp3.WebSocketListener() {
     private lateinit var client: OkHttpClient
