@@ -21,11 +21,14 @@ import org.opencv.android.CameraBridgeViewBase
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2
 import org.opencv.android.Utils
 import org.opencv.core.Core
+import org.opencv.core.CvType
 import org.opencv.core.Mat
 import org.opencv.core.Point
 import org.opencv.core.Rect
 import org.opencv.core.Scalar
 import org.opencv.imgproc.Imgproc
+import java.time.Duration
+import java.time.Instant
 import kotlin.math.sign
 import kotlin.random.Random
 
@@ -41,12 +44,12 @@ private const val TAG = "Camera"
  */
 private const val MAX_X = 1080;
 private const val MAX_Y = 1920;
-const val SPEED = 30
+const val SPEED = 3
 class OrbcamFragment : Fragment(), CvCameraViewListener2 {
 
     var orbImg = Mat()
     val outBuf = Mat()
-    val orbs: MutableList<Orb> = MutableList(3) { Orb() }
+    val orb = Orb()
     var orbsVisible = false
     val viewModel: MainViewModel by viewModels { MainViewModel.Factory }
 
@@ -124,26 +127,27 @@ class OrbcamFragment : Fragment(), CvCameraViewListener2 {
             overlayOrbs();
         }
 
+        Imgproc.cvtColor(outBuf, outBuf, Imgproc.COLOR_RGBA2GRAY)
+
         return outBuf
     }
 
     private fun overlayOrbs() {
         val alpha = 0.5;
-        for (orb in orbs) {
-            orb.update()
-            val srcRect = Rect(Point(0.0,0.0), orbImg.size())
-            val destRect = Rect(Point(orb.x.toDouble(), orb.y.toDouble()), srcRect.size())
+        orb.update()
 
-            if (destRect.x + destRect.width < outBuf.width()
-                && destRect.y + destRect.height < outBuf.height()) {
-                val outRoi = outBuf.submat(destRect)
-                Core.add(outRoi, orbImg, outRoi)
+        if (orb.isPaused()) return
+
+        val srcRect = Rect(Point(0.0,0.0), orbImg.size())
+        val destRect = Rect(Point(orb.x.toDouble(), orb.y.toDouble()), srcRect.size())
+
+        if (destRect.x + destRect.width < outBuf.width()
+            && destRect.y + destRect.height < outBuf.height()) {
+            val outRoi = outBuf.submat(destRect)
+            Core.add(outRoi, orbImg, outRoi)
 //                Core.addWeighted(outRoi, alpha, orbImg, 1-alpha,0.2, outRoi)
-                outRoi.release()
-            }
+            outRoi.release()
         }
-
-
     }
 }
 
@@ -152,6 +156,8 @@ class Orb() {
     var y = Random.nextInt(0, MAX_Y);
     var dx: Int
     var dy: Int
+
+    var pauseTime: Instant? = null;
 
     init {
         if(Random.nextBoolean()) {
@@ -170,10 +176,20 @@ class Orb() {
     }
 
     fun update() {
+        if (pauseTime != null) {
+            val duration = Duration.between(pauseTime, Instant.now()).seconds
+            if (duration > 4) {
+                pauseTime = null
+                x = Random.nextInt(0, MAX_X);
+                y = Random.nextInt(0, MAX_Y);
+
+            }
+            return
+        }
 
         val xPrime = x + dx * SPEED
         if (xPrime > MAX_X || xPrime < 0) {
-            dx *= -1
+            pauseTime = Instant.now()
         }
         else {
             x = xPrime
@@ -181,12 +197,16 @@ class Orb() {
 
         val yPrime = y + dy * SPEED
         if (yPrime > MAX_Y || yPrime < 0) {
-            dy *= -1
+            pauseTime = Instant.now()
         }
         else {
             y = yPrime
         }
 
 //        Log.d(TAG, "Location update: $x, $y")
+    }
+
+    fun isPaused(): Boolean {
+        return pauseTime != null;
     }
 }
