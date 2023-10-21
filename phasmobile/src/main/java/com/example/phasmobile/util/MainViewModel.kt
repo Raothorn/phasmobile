@@ -45,11 +45,12 @@ data class UiState(
     }
 
     fun currentTemp(): Int {
+        val defaultTemp = 62
         return if (closestBeacon == gamestate?.favoriteRoom) {
-            gamestate?.ghostRoomTemp ?: 50
+            gamestate?.ghostRoomTemp
         } else {
-            gamestate?.ambientTemp ?: 50
-        }
+            gamestate?.ambientTemp
+        } ?: defaultTemp
     }
 }
 

@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.phasmobile.R
@@ -15,12 +17,9 @@ import kotlinx.coroutines.launch
 
 class ThermometerFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = ThermometerFragment()
-    }
 
     private val mainViewModel: MainViewModel by viewModels { MainViewModel.Factory }
-    private val viewModel: ThermometerViewModel = ThermometerViewModel()
+    private val viewModel: ThermometerViewModel = ThermometerViewModel.getInstance()
     private var _binding: FragmentThermometerBinding? = null
 
     private val binding get() = _binding!!
@@ -43,8 +42,26 @@ class ThermometerFragment : Fragment() {
         val root: View = binding.root
 
         binding.viewModel = viewModel
+        val layout = binding.clTherm
+
+        setBg(layout);
+
+        val unitBtn = binding.btnUnit
+        unitBtn.setOnClickListener {
+            viewModel.toggleUnit()
+            setBg(layout);
+
+        }
 
         return root
+    }
+
+    private fun setBg(layout: ConstraintLayout) {
+        val bg = when(viewModel.unit) {
+            Unit.F -> R.drawable.thermometer_f
+            Unit.C -> R.drawable.thermometer_c
+        }
+        layout.background = ResourcesCompat.getDrawable(resources, bg, null)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
